@@ -1,3 +1,4 @@
+// Original code writen by @kyletmiller in a comment on https://gist.github.com/MichaelLawton/ec73c321d62d1b4eaf0f51ca478ccd92#gistcomment-3005931
 function moveToWishList() {
 	/*
 	* Variable to hold all items that can be moved to a wish list

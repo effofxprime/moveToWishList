@@ -3,13 +3,13 @@ function moveToWishList() {
 	/*
 	* Variable to hold all items that can be moved to a wish list
 	*/
-	var query = document.querySelectorAll("#sc-saved-cart input[value='Move to Wish List']")
+	var query = document.querySelectorAll("#sc-saved-cart input[value='Add to list']")
 	/*
 	* The query2 variable needs to be changed.
 	* You'll need to view the source of your Shopping Cart page to get the list/registry ID 
-	* of your specific list to save them to (should look something like "#registry-XXXXXXXXXXXXX").
+	* of your specific list to save them to (should look something like "#cldd-add-item-declarative-XXXXXXXXXXXXX").
 	*/
-	var query2 = document.querySelectorAll("#registry-XXXXXXXXXXXXX a")
+	var query2 = document.querySelectorAll("#cldd-add-item-declarative-XXXXXXXXXXXXX a")
 
 	/*
 	* The first variable finds the number of saved items you have

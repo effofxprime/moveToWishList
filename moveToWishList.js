@@ -41,9 +41,11 @@ function actionOne(savedItems, counter) {
 	if (savedItems !== 0 && counter != 10) { // If the counter (mentioned below) reaches 10 we will stop attempting.
 		addList[0].click();
 		console.log('Waiting...');
-		setTimeout(actionTwo,500,savedItems, counter); // 500ms delay
+		setTimeout(actionTwo,1000,savedItems, counter); // 500ms delay
 		// Add to list variable gets reset, just the way we like it.
 	}
+}
+
 // Action 2/2 - Add to wishList
 function actionTwo(savedItems, counter) {
 	console.log('Returning to next action');
@@ -70,11 +72,11 @@ function actionTwo(savedItems, counter) {
 	// also reset the counter, as we only care about per item basis!
 		counter = 0;
 	// Run the first action again for the next item in the list.
-	setTimeout(actionOne,500,savedItems,counter);
+	setTimeout(actionOne,1000,savedItems,counter);
+	}
+	if ( savedItems == 0 ){
+	console.log('Done!');
 	}
 }
-if ( savedItems == 0 ){
-	console.log('Done!');
-}
-}
+
 countItems(wishListID);

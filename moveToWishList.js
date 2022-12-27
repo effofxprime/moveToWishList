@@ -60,7 +60,7 @@ function actionTwo(savedItems, counter) {
 	*/
 		console.log('Retrying!');
 		counter++;
-		actionMan(savedItems, counter);
+		actionTwo(savedItems, counter);
 	} else {
 	// Looks like everything went well for this item, we will now click the wishlist to put the item into.
 		console.log(wishList);

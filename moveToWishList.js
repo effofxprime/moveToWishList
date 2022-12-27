@@ -1,12 +1,13 @@
 // Original code writen by @kyletmiller in a comment on https://gist.github.com/MichaelLawton/ec73c321d62d1b4eaf0f51ca478ccd92#gistcomment-3005931
 /*
 Usage:
-	1. edit the wishListID variable to the ID of your wishlist that you wish to use (heh, pun).
+	1. Edit the wishListID variable to the ID of your wishlist that you wish to use (heh, pun).
 			+ Can be found by first clicking on "Add to list", then Inspecting (Ctrl + Shift + C for firefox), Ctrl + F search for "cldd-add-item-declarative" then finding the right one which highlights the wishlist you want to use.
 			(Search up "Inspect keybind for X browser", replacing X with your browser name if you are not using firefox)
-	2. Paste entire script into browser console. (Ctrl + Shift + K on firefox, again, search for this keybind for your browser if not firefox)
-	3. Press ENTER key.
-	4. Sit back and watch, or get a Coffee, or both ... or neither!
+	2. Edit yesDelete variable to your liking (0 = do not delete items, 1 = delete items).
+	3. Paste entire script into browser console. (Ctrl + Shift + K on firefox, again, search for this keybind for your browser if not firefox)
+	4. Press ENTER key.
+	5. Sit back and watch, or get a Coffee, or both ... or neither!
 
 Timing Issues:
 	Edit the number in every "setTimeout" command, in miliseconds, to whatever works for you.
@@ -15,22 +16,23 @@ Timing Issues:
 		
 Possible future versions could include:
 	* A second timing option (Timer for executing the second action after the first, then another timer for the delay before starting the first action again for the next item.)
-	* Delete function with a toggle, in case you want to delete everything after moving all items.
 	* Fix retry if wishList hadn't loaded yet.
 */
 			
 var wishListID = "XXXXXXXXXXXXX"; // Change X's to your wishlist ID, read Usage section on how to find.
+var yesDelete = 0; // Change to 1 to also delete all your items.
 // var actionTiming = 5000; // Delay in ms, change to your needs - to be fixed?
 
 // Set X items
 function countItems() {
 	var savedItems = document.getElementById('sc-saved-cart-list-caption-text').getAttribute('data-saved-item-quantity');
 	console.log(savedItems);
-	actionOne(savedItems);
+	var deleteCount = savedItems;
+	actionOne(savedItems, deleteCount);
 }
 
 // Action 1/2 - Click "Add to list", open wishList dropdown.
-function actionOne(savedItems, counter) {
+function actionOne(savedItems, deleteCount, counter) {
 	// Setting up a counter so we can tell this script to stop trying.
 	if (counter === undefined) {
 		var counter = 0;
@@ -41,13 +43,13 @@ function actionOne(savedItems, counter) {
 	if (savedItems !== 0 && counter != 10) { // If the counter (mentioned below) reaches 10 we will stop attempting.
 		addList[0].click();
 		console.log('Waiting...');
-		setTimeout(actionTwo,1000,savedItems, counter); // 500ms delay
+		setTimeout(actionTwo,1000,savedItems, deleteCount, counter); // 500ms delay
 		// Add to list variable gets reset, just the way we like it.
 	}
 }
 
 // Action 2/2 - Add to wishList
-function actionTwo(savedItems, counter) {
+function actionTwo(savedItems, deleteCount, counter) {
 	console.log('Returning to next action');
 	// find wishlist item in dropdown that I HOPE loaded.
 	console.log('Setting wishList var');
@@ -62,7 +64,7 @@ function actionTwo(savedItems, counter) {
 	*/
 		console.log('Retrying!');
 		counter++;
-		actionTwo(savedItems, counter);
+		actionTwo(savedItems, deleteCount, counter);
 	} else {
 	// Looks like everything went well for this item, we will now click the wishlist to put the item into.
 		console.log(wishList);
@@ -72,11 +74,24 @@ function actionTwo(savedItems, counter) {
 	// also reset the counter, as we only care about per item basis!
 		counter = 0;
 	// Run the first action again for the next item in the list.
-	setTimeout(actionOne,1000,savedItems,counter);
+	setTimeout(actionOne,1000,savedItems, deleteCount, counter);
 	}
 	if ( savedItems == 0 ){
 	console.log('Done!');
+	deleteItems(deleteCount);
 	}
 }
 
+// Delete function
+function deleteItems(deleteCount) {
+	// Check if the user has enabled delete mode
+	if ( yesDelete == 1 ){
+		if ( deleteCount !== 0 ) {
+			var deleteLink = document.querySelectorAll("#sc-saved-cart input[value='Delete']");
+			deleteLink[0].click();
+			deleteCount--;
+			setTimeout(deleteItems,500,deleteCount);
+		}
+	}
+}
 countItems(wishListID);

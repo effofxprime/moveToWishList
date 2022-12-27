@@ -50,7 +50,7 @@ function actionTwo(savedItems, counter) {
 	// find wishlist item in dropdown that I HOPE loaded.
 	console.log('Setting wishList var');
 	console.log("#cldd-add-item-declarative-" + wishListID + " a");
-	wishList = document.querySelectorAll("#cldd-add-item-declarative-" + wishListID + " a");
+	var wishList = document.querySelectorAll("#cldd-add-item-declarative-" + wishListID + " a");
 	/* If we were a little too quick for the wishlist to load, we will try again.
 		Though we will add to a counter, as we do not want to keep doing this forever!!
 	*/

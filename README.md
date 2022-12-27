@@ -1,5 +1,6 @@
 ## How to use:
 * First go to your cart on amazon.
+* Edit the wishListID variable in the script (Described inside a comment in script).
 * Bring up the developer console:    
     CTRL+SHIFT+J for chrome.
     CTRL+SHIFT+K for firefox.
